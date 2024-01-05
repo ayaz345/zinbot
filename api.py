@@ -164,7 +164,7 @@ def get_token(tokentype: TokenType = 'csrf') -> str:
                  'type': tokentype})
     try:
         # How MW names all tokens:
-        token: str = query['query']['tokens'][tokentype + 'token']
+        token: str = query['query']['tokens'][f'{tokentype}token']
     except KeyError as e:
         raise APIError("No token obtained.", query) from e
     if token == R"+\\":

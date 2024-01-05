@@ -40,7 +40,7 @@ class Namespace(IntEnum):
         obj._value_ = number
         return obj
 
-    def __init__(self, _number: int, name: Optional[str] = None) -> None:  # pylint: disable=super-init-not-called
+    def __init__(self, _number: int, name: Optional[str] = None) -> None:    # pylint: disable=super-init-not-called
         """Initalizes a Namespace instance.
 
         Args:
@@ -50,10 +50,10 @@ class Namespace(IntEnum):
             name will be used.
         """
         raw_prefix = name if name is not None else self.name.capitalize()
-        self.prefix = raw_prefix + ":"
+        self.prefix = f"{raw_prefix}:"
         # Can't dynamically create new Namespace objects.
         self.talk = self + 1 if self >= 0 else None
-        self.talkprefix = raw_prefix + ' talk:' if self >= 0 else None
+        self.talkprefix = f'{raw_prefix} talk:' if self >= 0 else None
 
     def __str__(self) -> str:
         """Give a string of the value, to allow passing to URLs."""

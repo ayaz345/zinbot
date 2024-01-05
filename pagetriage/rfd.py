@@ -199,14 +199,15 @@ def cleanup(unreviewed_titles: list[str]) -> None:
         for day, entries in data.copy().items():
             if _onwiki_logger.day_too_old(day):
                 del data[day]
+            elif entries := SensitiveList(
+                [
+                    i
+                    for i in entries
+                    if i['page'].removeprefix(":") in unreviewed_titles
+                ]
+            ):
+                data[day] = entries
             else:
-                entries = SensitiveList(
-                    [i for i in entries
-                     if i['page'].removeprefix(":") in unreviewed_titles]
-                )
-                if not entries:
-                    del data[day]
-                else:
-                    data[day] = entries
+                del data[day]
         if data.been_changed():
             print("Cleaning up skippedRfDs.json")
